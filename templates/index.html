@@ -55,7 +55,13 @@
 
 <!-- SECCIÓN DEL BANNER -->
 <section class="relative max-w-7xl mx-auto my-6 px-4">
-    <div class="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-3xl shadow-xl bg-white border-4 border-white">
+    <!-- 
+      CAMBIOS REALIZADOS:
+      1. aspect-[3/4]: Formato vertical para que se vea gigante en el móvil.
+      2. md:aspect-[21/9]: Mantiene el formato ancho original en PC.
+      3. h-[70vh] md:h-auto: Fuerza una altura imponente en móvil, pero la libera en PC.
+    -->
+    <div class="relative w-full aspect-[3/4] h-[70vh] md:aspect-[21/9] md:h-auto overflow-hidden rounded-[2rem] shadow-2xl border-4 border-[#1A1B41]">
         
         <!-- Slide 1 -->
         <div class="banner-slide active absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out opacity-100">
@@ -70,6 +76,14 @@
                 <img src="{{ url_for('static', filename='imagenes/banner01.png') }}" alt="Banner 2" class="w-full h-full object-cover">
             </a>
         </div>
+
+        <!-- Indicadores -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+            <button onclick="changeSlide(0)" id="bullet-0" class="w-8 h-2.5 rounded-full bg-blue-500 transition-all duration-300 shadow-sm"></button>
+            <button onclick="changeSlide(1)" id="bullet-1" class="w-3 h-2.5 rounded-full bg-slate-300 transition-all duration-300 shadow-sm"></button>
+        </div>
+    </div>
+</section>
 
         <!-- Indicadores -->
         <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
