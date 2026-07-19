@@ -1,83 +1,105 @@
-
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OrtoLook </title>
+    <title>OrtoOok</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    
     <style>
         body { font-family: 'Quicksand', sans-serif; }
-        .font-fun { font-family: 'Fredoka One', cursive; }
-        .banner-slide { display: none; }
-        .banner-slide.active { display: block; }
-        .bg-magic {
-            background: linear-gradient(135deg, #ffe5ec 0%, #e8dbfc 35%, #e0f2fe 70%, #e8fdf5 100%);
-            background-attachment: fixed;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        .floating { animation: float 4s ease-in-out infinite; }
+        .font-display { font-family: 'Fredoka One', cursive; }
+        .bg-magic { background: linear-gradient(135deg, #ffe5ec 0%, #e8dbfc 35%, #e0f2fe 70%, #e8fdf5 100%); background-attachment: fixed; }
+        
+        /* Estilos críticos para el banner */
+        .banner-slide { display: none !important; }
+        .banner-slide.active { display: block !important; }
     </style>
 </head>
-<body class="bg-magic text-slate-700 antialiased">
+<body class="bg-magic text-slate-900 antialiased">
 
-    <!-- 1. LOGO FLOTANTE (Fuera del header para no romper el diseño) -->
-    <div class="fixed top-6 left-6 z-50">
-        <a href="/">
-            <img src="{{ url_for('static', filename='imagenes/logo-removebg-preview.png') }}" 
-                 alt="Logo Ortoook" 
-                 class="h-28 w-auto drop-shadow-lg">
+    <!-- NAV RESPONSIVO -->
+     <nav class="sticky top-4 z-50 w-full max-w-6xl mx-auto px-4">
+    
+    <div class="flex items-center justify-between bg-white p-4 rounded-3xl border-4 border-[#1A1B41] shadow-[8px_8px_0px_#1A1B41]">
+        <a href="/" class="flex items-center gap-2">
+          
+            <span class="font-display text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#FF3366] to-[#1A1B41] drop-shadow-sm">
+        Orto Ook
         </a>
+
+        <!-- Botón Hamburguesa -->
+        <button id="menu-btn" class="md:hidden p-2 border-2 border-[#1A1B41] rounded-full hover:bg-[#06D6A0] transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+        <!-- Menú PC -->
+        <ul class="hidden md:flex gap-8 font-bold text-sm uppercase tracking-widest">
+            <li><a href="#inicio" class="hover:text-[#FF3366]">Inicio</a></li>
+            <li><a href="#catalogo" class="hover:text-[#FF3366]">Catálogo</a></li>
+            <li><a href="#sucursales" class="hover:text-[#FF3366]">Ubicaciones</a></li>
+            <li><a href="#personalizacion" class="hover:text-[#FF3366]">Personalización</a></li>
+            <li><a href="#contacto" class="hover:text-[#FF3366]">Contacto</a></li>
+        </ul>
     </div>
 
-  <!-- Barra de Navegación Ajustada -->
-<header class="w-full bg-transparent sticky top-0 z-40 px-4 md:px-8 py-6">
-    <!-- Cambié py-3 por py-5 para darle más altura al contenedor -->
-    <nav class="container mx-auto max-w-7xl bg-white rounded-full border-[3px] border-slate-900 shadow-[4px_6px_0px_0px_rgba(15,23,42,1)] px-10 py-5 flex justify-center items-center gap-10">
-        
-        <!-- Cambié text-sm por text-base y gap-8 por gap-10 para que los enlaces se vean mejor -->
-        <ul class="flex gap-10 font-black text-slate-800 uppercase tracking-widest text-base">
-            <li><a href="/" class="hover:text-pink-500 transition-colors">Inicio</a></li>
-            <li><a href="#catalogo" class="hover:text-pink-500 transition-colors">Catálogo</a></li>
-            <li><a href="#personalizacion" class="hover:text-pink-500 transition-colors">Personalización</a></li>
-            <li><a href="#sucursales" class="hover:text-pink-500 transition-colors">Ubicaciones</a></li>
-            <li><a href="#contacto" class="hover:text-pink-500 transition-colors">Contacto</a></li>
-        </ul>
-    </nav>
-</header>
+    <!-- Menú Móvil -->
+    <div id="mobile-menu" class="hidden md:hidden mt-3 bg-white rounded-3xl border-4 border-[#1A1B41] p-6 flex-col gap-4 text-center font-bold uppercase shadow-[8px_8px_0px_#1A1B41]">
+        <a href="#inicio" class="block py-2">Inicio</a>
+        <a href="#catalogo" class="block py-2">Catálogo</a>
+        <a href="#personalizacion" class="block py-2">Personalización</a>
+        <a href="#sucursales" class="block py-2">Ubicaciones</a>
+        <a href="#contacto" class="block py-2">Contacto</a>
+    </div>
+</nav>
 
-    <!-- 2. SECCIÓN DEL BANNER PRINCIPAL / SLIDER GRANDE -->
-    <section class="relative max-w-7xl mx-auto my-6 px-4">
-        <div class="overflow-hidden rounded-3xl shadow-xl bg-white border-4 border-white">
-            
-            <!-- Slide 1: Imagen Principal -->
-            <div class="banner-slide active transition-all duration-700 ease-in-out">
-                <a href="https://wa.me/523334409779" class="block w-full">
-                    <img src="{{ url_for('static', filename='imagenes/banner03.png') }}" alt="Tenis Ortopédicos Personalizados" class="w-full h-auto object-contain mx-auto">
-                </a>
-            </div>
-
-            <!-- Slide 2: Ahora es una imagen propia -->
-<div class="banner-slide transition-all duration-700 ease-in-out">
-    <a href="https://wa.me/523334409779" class="block w-full">
-        <!-- Reemplaza 'tu-imagen.png' por el nombre real de tu archivo -->
-        <img src="{{ url_for('static', filename='imagenes/banner01.png') }}" 
-             alt="Descripción de tu imagen" 
-             class="w-full h-auto object-cover">
-    </a>
-</div>
-        <!-- Indicadores Inferiores -->
+<!-- SECCIÓN DEL BANNER -->
+<section class="relative max-w-7xl mx-auto my-6 px-4">
+    <div class="overflow-hidden rounded-3xl shadow-xl bg-white border-4 border-white relative">
+        <div class="banner-slide active transition-all duration-700 ease-in-out">
+            <a href="https://wa.me/523334409779" class="block w-full">
+                <img src="{{ url_for('static', filename='imagenes/banner03.png') }}" alt="Banner 1" class="w-full h-auto mx-auto">
+            </a>
+        </div>
+        <div class="banner-slide transition-all duration-700 ease-in-out">
+            <a href="https://wa.me/523334409779" class="block w-full">
+                <img src="{{ url_for('static', filename='imagenes/banner01.png') }}" alt="Banner 2" class="w-full h-auto mx-auto">
+            </a>
+        </div>
+        <!-- Indicadores -->
         <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
             <button onclick="changeSlide(0)" id="bullet-0" class="w-8 h-2.5 rounded-full bg-blue-500 transition-all duration-300 shadow-sm"></button>
             <button onclick="changeSlide(1)" id="bullet-1" class="w-3 h-2.5 rounded-full bg-slate-300 transition-all duration-300 shadow-sm"></button>
         </div>
-    </section>
+    </div>
+</section>
+
+<script>
+    // 1. Script para el Menú Hamburguesa
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuBtn.addEventListener('click', () => {
+        // Toggle entre flex y hidden para mostrar el menú
+        mobileMenu.style.display = (mobileMenu.style.display === 'flex') ? 'none' : 'flex';
+    });
+
+    // 2. Script para el Carrusel
+    function changeSlide(index) {
+        const slides = document.querySelectorAll('.banner-slide');
+        const bullets = [document.getElementById('bullet-0'), document.getElementById('bullet-1')];
+        
+        slides.forEach((s, i) => {
+            s.classList.toggle('active', i === index);
+        });
+        
+        bullets.forEach((b, i) => {
+            b.className = (i === index) 
+                ? "w-8 h-2.5 rounded-full bg-blue-500 transition-all duration-300 shadow-sm" 
+                : "w-3 h-2.5 rounded-full bg-slate-300 transition-all duration-300 shadow-sm";
+        });
+    }
+</script>
 
     <!-- Sección: ¿Por qué elegir Ortoook? -->
 <section class="max-w-7xl mx-auto py-16 px-4">
@@ -182,75 +204,83 @@
 </div>
 
 <section id="personalizacion" class="scroll-mt-24 pb-20 bg-slate-50">
-    <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-6xl mx-auto px-4 md:px-6">
         
         <!-- GRID PRINCIPAL -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-12">
             
             <!-- PREVISUALIZACIÓN -->
-            <div class="bg-white p-8 rounded-[2rem] border-[4px] border-slate-900 shadow-[12px_12px_0px_0px_rgba(15,23,42,1)] sticky top-28">
-                <div class="bg-slate-100 rounded-3xl p-8 flex items-center justify-center h-[400px] overflow-hidden">
+            <!-- Ahora el sticky solo aplica en pantallas grandes para no romper el layout móvil -->
+            <div class="bg-white p-6 md:p-8 rounded-[2rem] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] lg:sticky lg:top-28">
+                <div class="bg-slate-100 rounded-3xl p-6 flex items-center justify-center h-[300px] md:h-[400px] overflow-hidden">
                     <img id="zapatito-img" src="{{ url_for('static', filename='imagenes/tenis.png') }}" 
-                         class="w-full max-w-[320px] transition-all duration-500 animate-[float_4s_ease-in-out_infinite]">
+                         class="w-full max-w-[280px] transition-all duration-500 animate-[float_4s_ease-in-out_infinite]">
                 </div>
                 <div class="mt-8">
-                    <h3 class="text-3xl font-black text-slate-900">Tenis Orto Ook</h3>
-                    <p id="desc-text" class="text-lg text-slate-500 font-medium mt-2 transition-opacity duration-300">Rosa · Blanca · Spider · Talla 21</p>
+                    <h3 class="text-2xl md:text-3xl font-black text-slate-900">Tenis Orto Ook</h3>
+                    <p id="desc-text" class="text-base md:text-lg text-slate-500 font-medium mt-2 transition-opacity duration-300">Rosa · Blanca · Spider · Talla 21</p>
                 </div>
             </div>
 
             <!-- PANEL DE CONTROL -->
-            <div class="bg-white p-10 rounded-[2rem] border-[4px] border-slate-900 shadow-[12px_12px_0px_0px_rgba(15,23,42,1)] h-[600px] overflow-y-auto custom-scrollbar space-y-10">
+            <!-- Quitamos altura fija en móviles para mejor experiencia -->
+            <div class="bg-white p-6 md:p-10 rounded-[2rem] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] h-auto md:h-[600px] overflow-y-auto custom-scrollbar space-y-8">
+                
                 <style>
-                    .btn-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-                    .btn-hover:hover { transform: translateY(-5px) scale(1.02); }
-                    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
-                    .custom-scrollbar::-webkit-scrollbar { width: 8px; }
-                    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+                    .btn-hover { transition: all 0.2s ease; }
+                    .btn-hover:hover { transform: translateY(-3px); }
+                    .btn-selected { border-color: #0f172a !important; background-color: #f8fafc; }
+                    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+                    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
                     .custom-scrollbar::-webkit-scrollbar-thumb { background: #0f172a; border-radius: 10px; }
                 </style>
 
-                <!-- Secciones 1 a 5 (Colores, Suelas, Personaje, Talla) -->
+                <!-- Color Principal -->
                 <div>
-                    <h4 class="font-black text-slate-900 uppercase text-sm tracking-widest mb-6">1. Color Principal</h4>
-                    <div class="grid grid-cols-4 gap-4" id="grupo-colores">
-                        <button onclick="seleccionar(this, 'Rosa', 'color')" class="btn-color btn-hover border-[3px] border-slate-900 p-4 rounded-2xl flex flex-col items-center"><div class="w-10 h-10 rounded-full bg-pink-500 mb-2"></div><span class="text-xs font-bold">Rosa</span></button>
-                        <button onclick="seleccionar(this, 'Turquesa', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-4 rounded-2xl flex flex-col items-center"><div class="w-10 h-10 rounded-full bg-cyan-500 mb-2"></div><span class="text-xs font-bold">Turque.</span></button>
-                        <button onclick="seleccionar(this, 'Amarillo', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-4 rounded-2xl flex flex-col items-center"><div class="w-10 h-10 rounded-full bg-yellow-400 mb-2"></div><span class="text-xs font-bold">Amaril.</span></button>
-                        <button onclick="seleccionar(this, 'Verde', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-4 rounded-2xl flex flex-col items-center"><div class="w-10 h-10 rounded-full bg-green-500 mb-2"></div><span class="text-xs font-bold">Verde</span></button>
+                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">1. Color Principal</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="grupo-colores">
+                        <button onclick="seleccionar(this, 'Rosa', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-pink-500 mb-2"></div><span class="text-[10px] font-bold">Rosa</span></button>
+                        <button onclick="seleccionar(this, 'Turquesa', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-cyan-500 mb-2"></div><span class="text-[10px] font-bold">Turque.</span></button>
+                        <button onclick="seleccionar(this, 'Amarillo', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-yellow-400 mb-2"></div><span class="text-[10px] font-bold">Amaril.</span></button>
+                        <button onclick="seleccionar(this, 'Verde', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-green-500 mb-2"></div><span class="text-[10px] font-bold">Verde</span></button>
                     </div>
                 </div>
 
+                <!-- Color Suela -->
                 <div>
-                    <h4 class="font-black text-slate-900 uppercase text-sm tracking-widest mb-6">2. Color de suela</h4>
-                    <div class="grid grid-cols-4 gap-4" id="grupo-suela">
-                        <button onclick="seleccionar(this, 'Blanca', 'suela')" class="btn-suela btn-hover border-[3px] border-slate-900 p-4 rounded-2xl flex flex-col items-center"><div class="w-10 h-10 rounded-full bg-white border-2 border-slate-200 mb-2"></div><span class="text-xs font-bold">Blanca</span></button>
-                        <button onclick="seleccionar(this, 'Crema', 'suela')" class="btn-suela btn-hover border-[3px] border-slate-200 p-4 rounded-2xl flex flex-col items-center"><div class="w-10 h-10 rounded-full bg-yellow-50 border-2 border-slate-200 mb-2"></div><span class="text-xs font-bold">Crema</span></button>
+                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">2. Color de suela</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="grupo-suela">
+                        <button onclick="seleccionar(this, 'Blanca', 'suela')" class="btn-suela btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-white border border-slate-300 mb-2"></div><span class="text-[10px] font-bold">Blanca</span></button>
+                        <button onclick="seleccionar(this, 'Crema', 'suela')" class="btn-suela btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-yellow-50 border border-slate-300 mb-2"></div><span class="text-[10px] font-bold">Crema</span></button>
                     </div>
                 </div>
 
+                <!-- Personaje -->
                 <div>
-                    <h4 class="font-black text-slate-900 uppercase text-sm tracking-widest mb-6">4. Personaje</h4>
-                    <div class="grid grid-cols-4 gap-4" id="grupo-personajes">
-                        <button onclick="seleccionar(this, 'Spider', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-900 p-4 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0101.png') }}" class="w-20 h-20 mb-2 object-contain"><span class="text-xs font-bold">Spider</span></button>
-                        <button onclick="seleccionar(this, 'Minions', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-4 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0202.png') }}" class="w-20 h-20 mb-2 object-contain"><span class="text-xs font-bold">Minions</span></button>
-                        <button onclick="seleccionar(this, 'Princesas', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-4 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0303.png') }}" class="w-20 h-20 mb-2 object-contain"><span class="text-xs font-bold">Princesas</span></button>
-                        <button onclick="seleccionar(this, 'Guerreras', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-4 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/00404.png') }}" class="w-20 h-20 mb-2 object-contain"><span class="text-xs font-bold">Guerreras</span></button>
+                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">3. Personaje</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="grupo-personajes">
+                        <button onclick="seleccionar(this, 'Spider', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0101.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Spider</span></button>
+                        <button onclick="seleccionar(this, 'Minions', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0303.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Princesas</span></button>
+                        <button onclick="seleccionar(this, 'Spider', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0202.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Minions</span></button>
+                        <button onclick="seleccionar(this, 'Minions', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/00404.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Guerreras</span></button>
                     </div>
                 </div>
 
+                <!-- Talla -->
                 <div>
-                    <h4 class="font-black text-slate-900 uppercase text-sm tracking-widest mb-6">5. Talla</h4>
-                    <div class="flex flex-wrap gap-3" id="grupo-tallas">
+                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">4. Talla</h4>
+                    <div class="flex flex-wrap gap-2" id="grupo-tallas">
                         <script>
                             for(let i=18; i<=26; i++) {
-                                document.write(`<button onclick="seleccionar(this, '${i}', 'talla')" class="btn-talla btn-hover border-[3px] ${i==21?'border-slate-900':'border-slate-200'} px-6 py-4 rounded-xl font-black text-sm">${i}</button>`);
+                                document.write(`<button onclick="seleccionar(this, '${i}', 'talla')" class="btn-talla btn-hover border-[3px] border-slate-200 px-4 py-2 rounded-lg font-black text-xs hover:border-slate-900">${i}</button>`);
                             }
                         </script>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
 
         <!-- 6. DATOS DEL PEDIDO (Fuera del panel) -->
         <div class="bg-white p-10 rounded-[2rem] border-[4px] border-slate-900 shadow-[12px_12px_0px_0px_rgba(15,23,42,1)]">
