@@ -282,50 +282,31 @@
     </div>
 </section>
 
-        <!-- 6. DATOS DEL PEDIDO (Fuera del panel) -->
-        <div class="bg-white p-10 rounded-[2rem] border-[4px] border-slate-900 shadow-[12px_12px_0px_0px_rgba(15,23,42,1)]">
-            <h4 class="font-black text-slate-900 uppercase text-sm tracking-widest mb-8">6. Datos del pedido</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" placeholder="Nombre del peque (para bordar)" class="p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none">
-                <input type="text" placeholder="Tu nombre *" class="p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none">
-                <input type="tel" placeholder="Teléfono / WhatsApp *" class="p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none">
-                <input type="email" placeholder="Correo (opcional)" class="p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none">
-            </div>
-            <textarea placeholder="Notas adicionales..." class="w-full mt-6 p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none h-24 resize-none"></textarea>
-            
-            <div class="flex flex-col sm:flex-row items-center gap-6 mt-8">
-                <button class="w-full sm:w-auto border-[3px] border-slate-900 px-10 py-4 rounded-2xl font-black text-slate-900 hover:bg-slate-100 transition">Guardar pedido</button>
-                <button class="w-full sm:w-auto bg-rose-500 border-[3px] border-slate-900 px-10 py-4 rounded-2xl font-black text-white hover:bg-rose-600 transition">Pagar</button>
-                <p class="text-sm text-slate-400 font-medium italic">Pago seguro vía Stripe · o paga en sucursal.</p>
-            </div>
+       <!-- 6. DATOS DEL PEDIDO -->
+<section class="max-w-6xl mx-auto px-4 py-8">
+    <div class="bg-white p-6 md:p-10 rounded-[2rem] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
+        <h4 class="font-black text-slate-900 uppercase text-sm tracking-widest mb-8">6. Datos del pedido</h4>
+        
+        <!-- Grid adaptable: 1 columna en móvil, 2 en tablets/escritorio -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <input type="text" placeholder="Nombre del peque" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
+            <input type="text" placeholder="Tu nombre *" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
+            <input type="tel" placeholder="Teléfono / WhatsApp *" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
+            <input type="email" placeholder="Correo (opcional)" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
         </div>
         
+        <textarea placeholder="Notas adicionales..." class="w-full mt-6 p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none h-24 resize-none"></textarea>
+        
+        <!-- Botones adaptables -->
+        <div class="flex flex-col gap-4 mt-8">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button class="w-full sm:w-1/2 border-[3px] border-slate-900 py-4 rounded-2xl font-black text-slate-900 hover:bg-slate-100 transition-all">Guardar pedido</button>
+                <button class="w-full sm:w-1/2 bg-rose-500 border-[3px] border-slate-900 py-4 rounded-2xl font-black text-white hover:bg-rose-600 transition-all shadow-[4px_4px_0px_#1A1B41]">Pagar</button>
+            </div>
+            <p class="text-xs md:text-sm text-slate-400 font-medium italic text-center sm:text-left">Pago seguro vía Stripe · o paga en sucursal.</p>
+        </div>
     </div>
 </section>
-
-<script>
-    let sel = { color: 'Rosa', suela: 'Blanca', personaje: 'Spider', talla: '21' };
-
-    function seleccionar(btn, valor, tipo) {
-        btn.style.transform = "scale(0.95)";
-        setTimeout(() => btn.style.transform = "", 150);
-
-        const claseGrupo = 'btn-' + tipo;
-        btn.parentElement.querySelectorAll('.' + claseGrupo).forEach(b => {
-            b.classList.replace('border-slate-900', 'border-slate-200');
-        });
-        btn.classList.replace('border-slate-200', 'border-slate-900');
-        
-        sel[tipo] = valor;
-        const texto = document.getElementById('desc-text');
-        texto.classList.add('opacity-0');
-        setTimeout(() => {
-            texto.innerText = `${sel.color} · ${sel.suela} · ${sel.personaje} · Talla ${sel.talla}`;
-            texto.classList.remove('opacity-0');
-        }, 150);
-    }
-</script>
-
 
 <!-- Encabezado de la sección -->
 <div class="text-center mt-8 mb-4">
