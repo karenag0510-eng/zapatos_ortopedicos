@@ -53,35 +53,27 @@
     </div>
 </nav>
 
-<!-- SECCIÓN DEL BANNER -->
-<section class="relative max-w-7xl mx-auto my-6 px-4">
+<!-- SECCIÓN DEL BANNER FINAL (RESPONSIVA Y SIN MÁRGENES) -->
+<section class="w-full">
     <!-- 
-      CAMBIOS REALIZADOS:
-      1. aspect-[3/4]: Formato vertical para que se vea gigante en el móvil.
-      2. md:aspect-[21/9]: Mantiene el formato ancho original en PC.
-      3. h-[70vh] md:h-auto: Fuerza una altura imponente en móvil, pero la libera en PC.
+      - w-full: Elimina márgenes laterales.
+      - aspect-[3/4] h-[70vh]: Proporción vertical e imponente para móviles.
+      - md:aspect-[21/9] md:h-auto: Regresa al formato horizontal estándar en PC.
+      - md:rounded-[2rem]: Aplica esquinas redondeadas solo en PC.
     -->
-    <div class="relative w-full aspect-[3/4] h-[70vh] md:aspect-[21/9] md:h-auto overflow-hidden rounded-[2rem] shadow-2xl border-4 border-[#1A1B41]">
+    <div class="relative w-full aspect-[3/4] h-[70vh] md:aspect-[21/9] md:h-auto overflow-hidden md:rounded-[2rem] shadow-2xl border-b-4 border-[#1A1B41]">
         
-        <!-- Slide 1 -->
-        <div class="banner-slide active absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out opacity-100">
-            <a href="https://wa.me/523334409779" class="block w-full h-full">
-                <img src="{{ url_for('static', filename='imagenes/banner03.png') }}" alt="Banner 1" class="w-full h-full object-cover">
-            </a>
-        </div>
-
-        <!-- Slide 2 -->
-        <div class="banner-slide absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out opacity-0">
-            <a href="https://wa.me/523334409779" class="block w-full h-full">
-                <img src="{{ url_for('static', filename='imagenes/banner01.png') }}" alt="Banner 2" class="w-full h-full object-cover">
-            </a>
-        </div>
-
-        <!-- Indicadores -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
-            <button onclick="changeSlide(0)" id="bullet-0" class="w-8 h-2.5 rounded-full bg-blue-500 transition-all duration-300 shadow-sm"></button>
-            <button onclick="changeSlide(1)" id="bullet-1" class="w-3 h-2.5 rounded-full bg-slate-300 transition-all duration-300 shadow-sm"></button>
-        </div>
+        <a href="https://wa.me/523334409779" class="block w-full h-full">
+            <picture>
+                <!-- IMAGEN MÓVIL: Se cargará cuando la pantalla sea menor a 768px -->
+                <source media="(max-width: 768px)" srcset="{{ url_for('static', filename='imagenes/bb.png') }}">
+                
+                <!-- IMAGEN PC: Se cargará en computadoras -->
+                <img src="{{ url_for('static', filename='imagenes/banner03.png') }}" 
+                     alt="Banner Orto Ook" 
+                     class="w-full h-full object-cover">
+            </picture>
+        </a>
     </div>
 </section>
 
@@ -92,6 +84,8 @@
         </div>
     </div>
 </section>
+
+      
 
 <script>
     // 1. Script Menú Hamburguesa
@@ -109,21 +103,7 @@
         });
     });
 
-    // 2. Script Carrusel
-    function changeSlide(index) {
-        const slides = document.querySelectorAll('.banner-slide');
-        const bullets = [document.getElementById('bullet-0'), document.getElementById('bullet-1')];
-        
-        slides.forEach((s, i) => {
-            s.style.opacity = (i === index) ? "1" : "0";
-        });
-        
-        bullets.forEach((b, i) => {
-            b.className = (i === index) 
-                ? "w-8 h-2.5 rounded-full bg-blue-500 transition-all duration-300 shadow-sm" 
-                : "w-3 h-2.5 rounded-full bg-slate-300 transition-all duration-300 shadow-sm";
-        });
-    }
+   
 </script>
 
     <!-- Sección: ¿Por qué elegir Ortoook? -->
