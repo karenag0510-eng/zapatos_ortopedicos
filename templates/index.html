@@ -18,14 +18,14 @@
 </head>
 <body class="bg-magic text-slate-900 antialiased">
 
-    <!-- NAV RESPONSIVO -->
-     <nav class="sticky top-4 z-50 w-full max-w-6xl mx-auto px-4">
-    
+ <!-- NAV RESPONSIVO -->
+<nav class="sticky top-4 z-50 w-full max-w-6xl mx-auto px-4">
     <div class="flex items-center justify-between bg-white p-4 rounded-3xl border-4 border-[#1A1B41] shadow-[8px_8px_0px_#1A1B41]">
         <a href="/" class="flex items-center gap-2">
-          
+            <!-- Título estilizado -->
             <span class="font-display text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#FF3366] to-[#1A1B41] drop-shadow-sm">
-        Orto Ook
+                Orto Ook
+            </span>
         </a>
 
         <!-- Botón Hamburguesa -->
@@ -55,17 +55,22 @@
 
 <!-- SECCIÓN DEL BANNER -->
 <section class="relative max-w-7xl mx-auto my-6 px-4">
-    <div class="overflow-hidden rounded-3xl shadow-xl bg-white border-4 border-white relative">
-        <div class="banner-slide active transition-all duration-700 ease-in-out">
-            <a href="https://wa.me/523334409779" class="block w-full">
-                <img src="{{ url_for('static', filename='imagenes/banner03.png') }}" alt="Banner 1" class="w-full h-auto mx-auto">
+    <div class="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-3xl shadow-xl bg-white border-4 border-white">
+        
+        <!-- Slide 1 -->
+        <div class="banner-slide active absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out opacity-100">
+            <a href="https://wa.me/523334409779" class="block w-full h-full">
+                <img src="{{ url_for('static', filename='imagenes/banner03.png') }}" alt="Banner 1" class="w-full h-full object-cover">
             </a>
         </div>
-        <div class="banner-slide transition-all duration-700 ease-in-out">
-            <a href="https://wa.me/523334409779" class="block w-full">
-                <img src="{{ url_for('static', filename='imagenes/banner01.png') }}" alt="Banner 2" class="w-full h-auto mx-auto">
+
+        <!-- Slide 2 -->
+        <div class="banner-slide absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out opacity-0">
+            <a href="https://wa.me/523334409779" class="block w-full h-full">
+                <img src="{{ url_for('static', filename='imagenes/banner01.png') }}" alt="Banner 2" class="w-full h-full object-cover">
             </a>
         </div>
+
         <!-- Indicadores -->
         <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
             <button onclick="changeSlide(0)" id="bullet-0" class="w-8 h-2.5 rounded-full bg-blue-500 transition-all duration-300 shadow-sm"></button>
@@ -75,22 +80,28 @@
 </section>
 
 <script>
-    // 1. Script para el Menú Hamburguesa
+    // 1. Script Menú Hamburguesa
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     
     menuBtn.addEventListener('click', () => {
-        // Toggle entre flex y hidden para mostrar el menú
         mobileMenu.style.display = (mobileMenu.style.display === 'flex') ? 'none' : 'flex';
     });
 
-    // 2. Script para el Carrusel
+    // Cerrar menú al hacer clic en un enlace
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.style.display = 'none';
+        });
+    });
+
+    // 2. Script Carrusel
     function changeSlide(index) {
         const slides = document.querySelectorAll('.banner-slide');
         const bullets = [document.getElementById('bullet-0'), document.getElementById('bullet-1')];
         
         slides.forEach((s, i) => {
-            s.classList.toggle('active', i === index);
+            s.style.opacity = (i === index) ? "1" : "0";
         });
         
         bullets.forEach((b, i) => {
