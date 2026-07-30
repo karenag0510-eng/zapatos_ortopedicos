@@ -5,534 +5,703 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OrtoOok</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Quicksand', sans-serif; }
-        .font-display { font-family: 'Fredoka One', cursive; }
-        .bg-magic { background: linear-gradient(135deg, #ffe5ec 0%, #e8dbfc 35%, #e0f2fe 70%, #e8fdf5 100%); background-attachment: fixed; }
-        
-        /* Estilos críticos para el banner */
-        .banner-slide { display: none !important; }
-        .banner-slide.active { display: block !important; }
-    </style>
+    <!-- AOS Library para animaciones al hacer scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+   <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        /* Fondo Aclarado: Versiones mucho más pálidas de los tonos originales */
+        background: linear-gradient(135deg, #ecfccb 0%, #cffafe 35%, #e0f2fe 70%, #eef2ff 100%);
+        background-attachment: fixed;
+        color: #0f172a;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+    }
+    .slider-track {
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+</style>
 </head>
-<body class="bg-magic text-slate-900 antialiased">
+<body class="text-slate-900">
 
- <!-- NAV RESPONSIVO -->
-<nav class="sticky top-4 z-50 w-full max-w-6xl mx-auto px-4">
-    <div class="flex items-center justify-between bg-white p-4 rounded-3xl border-4 border-[#1A1B41] shadow-[8px_8px_0px_#1A1B41]">
-        <a href="/" class="flex items-center gap-2">
-            <!-- Título estilizado -->
-            <span class="font-display text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#FF3366] to-[#1A1B41] drop-shadow-sm">
-                Orto Ook
-            </span>
-        </a>
+    <!-- Header / Navbar Principal -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-cyan-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl font-black tracking-tighter text-slate-900">ORTO<span class="text-cyan-600">OOK</span>.</span>
+            </div>
 
-        <!-- Botón Hamburguesa -->
-        <button id="menu-btn" class="md:hidden p-2 border-2 border-[#1A1B41] rounded-full hover:bg-[#06D6A0] transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </button>
+            <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-700">
+                <a href="#inicio" class="hover:text-cyan-600 transition-colors">Inicio</a>
+                <a href="#salud" class="hover:text-cyan-600 transition-colors">Nuestros Servicios</a>
+                <a href="#blog" class="hover:text-cyan-600 transition-colors">Blog</a>
+                <a href="#ubicaciones" class="hover:text-cyan-600 transition-colors">Sucursales</a>
+            </nav>
 
-        <!-- Menú PC -->
-        <ul class="hidden md:flex gap-8 font-bold text-sm uppercase tracking-widest">
-            <li><a href="#inicio" class="hover:text-[#FF3366]">Inicio</a></li>
-            <li><a href="#catalogo" class="hover:text-[#FF3366]">Catálogo</a></li>
-            <li><a href="#sucursales" class="hover:text-[#FF3366]">Ubicaciones</a></li>
-            <li><a href="#personalizacion" class="hover:text-[#FF3366]">Personalización</a></li>
-            <li><a href="#contacto" class="hover:text-[#FF3366]">Contacto</a></li>
-        </ul>
-    </div>
-
-    <!-- Menú Móvil -->
-    <div id="mobile-menu" class="hidden md:hidden mt-3 bg-white rounded-3xl border-4 border-[#1A1B41] p-6 flex-col gap-4 text-center font-bold uppercase shadow-[8px_8px_0px_#1A1B41]">
-        <a href="#inicio" class="block py-2">Inicio</a>
-        <a href="#catalogo" class="block py-2">Catálogo</a>
-        <a href="#personalizacion" class="block py-2">Personalización</a>
-        <a href="#sucursales" class="block py-2">Ubicaciones</a>
-        <a href="#contacto" class="block py-2">Contacto</a>
-    </div>
-</nav>
-
-<!-- SECCIÓN DEL BANNER FINAL (RESPONSIVA Y SIN MÁRGENES) -->
-<section class="w-full">
-    <!-- 
-      - w-full: Elimina márgenes laterales.
-      - aspect-[3/4] h-[70vh]: Proporción vertical e imponente para móviles.
-      - md:aspect-[21/9] md:h-auto: Regresa al formato horizontal estándar en PC.
-      - md:rounded-[2rem]: Aplica esquinas redondeadas solo en PC.
-    -->
-    <div class="relative w-full aspect-[3/4] h-[70vh] md:aspect-[21/9] md:h-auto overflow-hidden md:rounded-[2rem] shadow-2xl border-b-4 border-[#1A1B41]">
-        
-        <a href="https://wa.me/523334409779" class="block w-full h-full">
-            <picture>
-                <!-- IMAGEN MÓVIL: Se cargará cuando la pantalla sea menor a 768px -->
-                <source media="(max-width: 768px)" srcset="{{ url_for('static', filename='imagenes/bb.png') }}">
-                
-                <!-- IMAGEN PC: Se cargará en computadoras -->
-                <img src="{{ url_for('static', filename='imagenes/banner03.png') }}" 
-                     alt="Banner Orto Ook" 
-                     class="w-full h-full object-cover">
-            </picture>
-        </a>
-    </div>
-</section>
-
-        <!-- Indicadores -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
-            <button onclick="changeSlide(0)" id="bullet-0" class="w-8 h-2.5 rounded-full bg-blue-500 transition-all duration-300 shadow-sm"></button>
-            <button onclick="changeSlide(1)" id="bullet-1" class="w-3 h-2.5 rounded-full bg-slate-300 transition-all duration-300 shadow-sm"></button>
+         <!-- Botón Hamburguesa para Móviles -->
+            <button id="menuBtn" class="md:hidden text-slate-800 focus:outline-none p-2 rounded-lg hover:bg-cyan-50 transition" aria-label="Abrir menú">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
         </div>
-    </div>
-</section>
 
-      
-
-<script>
-    // 1. Script Menú Hamburguesa
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
+       <!-- Menú Desplegable para Celulares -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-b border-cyan-100 px-6 py-6 space-y-4 shadow-xl">
+            <nav class="flex flex-col space-y-3 text-base font-semibold text-slate-700">
+                <a href="#inicio" class="mobile-link hover:text-cyan-600 transition-colors py-2 border-b border-slate-100">Inicio</a>
+                <a href="#salud" class="mobile-link hover:text-cyan-600 transition-colors py-2 border-b border-slate-100">Nuestros servicios</a>
+                <a href="#blog" class="mobile-link hover:text-cyan-600 transition-colors py-2 border-b border-slate-100">Blog</a>
+                <a href="#ubicaciones" class="mobile-link hover:text-cyan-600 transition-colors py-2">Sucursales</a>
+            </nav>
+        </div>
+    </header>
     
-    menuBtn.addEventListener('click', () => {
-        mobileMenu.style.display = (mobileMenu.style.display === 'flex') ? 'none' : 'flex';
-    });
-
-    // Cerrar menú al hacer clic en un enlace
-    document.querySelectorAll('#mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.style.display = 'none';
-        });
-    });
-
-   
-</script>
-
-    <!-- Sección: ¿Por qué elegir Ortoook? -->
-<section class="max-w-7xl mx-auto py-16 px-4">
-    <!-- Título con diseño divertido -->
-    <div class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-black text-slate-800">
-            ¿Por qué elegir <span class="text-pink-500">Ortoook</span>?
-        </h2>
-        <p class="text-slate-600 mt-4 text-lg font-medium">Diversión y cuidado en cada paso.</p>
+<!-- HERO SECTION CON BANNER ROTATIVO -->
+    <section id="inicio" class="relative overflow-hidden py-12 md:py-20 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto relative overflow-hidden">
+            
+            <!-- Contenedor del Carrusel de Banners -->
+            <div class="slider-track" id="sliderTrack">
+                
+            <!-- BANNER 1 -->
+    <div class="w-full flex-shrink-0 grid md:grid-cols-2 gap-8 md:gap-12 items-center px-4 py-8">
+        <div class="space-y-6 text-left" data-aos="fade-right">
+           
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight text-slate-900">
+                ¡DISEÑAMOS Y PERSONALIZAMOS <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 to-blue-700">
+                    TUS TENIS ORTOPÉDICOS FAVORITOS!
+                </span>
+            </h1>
+            <p class="text-slate-700 text-base sm:text-lg leading-relaxed max-w-lg font-medium">
+                Transformamos el calzado ortopédico en una aventura única. Cada par se personaliza a su medida con sus colores, personajes y detalles preferidos, cuidando su desarrollo con amor y tecnología clínica.
+            </p>
+        </div>
+        <div class="relative" data-aos="fade-left">
+            <div class="w-full h-64 sm:h-80 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl relative group bg-cyan-100 border-4 border-white">
+             <img src="static/imagenes/ima.png" alt="Ortoook Tenis Personalizados" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">  
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
+                   
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Grid de Tarjetas -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- Tarjeta 1: Súper cómodos -->
-        <div class="group bg-white p-6 rounded-3xl border-[3px] border-slate-900 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-300">
-            <div class="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center mb-4 border-2 border-slate-900">
-                <img src="https://cdn-icons-png.flaticon.com/512/3233/3233965.png" class="w-10 h-10">
-            </div>
-            <h3 class="text-xl font-black text-slate-800">Súper cómodos</h3>
-            <p class="text-slate-600 mt-2">Materiales suaves para pies felices.</p>
+    <!-- BANNER 2 -->
+    <div class="w-full flex-shrink-0 grid md:grid-cols-2 gap-8 md:gap-12 items-center px-4 py-8">
+        <div class="space-y-6 text-left">
+           
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight text-slate-900">
+                CRECIMIENTO FELIZ, <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700">
+                    PASITOS SEGUROS Y PLENOS.
+                </span>
+            </h1>
+            <p class="text-slate-700 text-base sm:text-lg leading-relaxed max-w-lg font-medium">
+                Acompañamos cada etapa de su infancia con un soporte plantar impecable. Porque su libertad para correr, saltar y explorar merece el cuidado experto que les da total confianza.
+            </p>
         </div>
-
-        <!-- Tarjeta 2: Soporte ortopédico -->
-        <div class="group bg-white p-6 rounded-3xl border-[3px] border-slate-900 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-300">
-            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 border-2 border-slate-900">
-                <img src="https://cdn-icons-png.flaticon.com/512/2904/2904423.png" class="w-10 h-10">
+        <div class="relative">
+            <div class="w-full h-64 sm:h-80 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl relative group bg-blue-100 border-4 border-white">
+              <img src="static/imagenes/01.png" alt="Ortoook Calzado Infantil" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
+                   
+                </div>
             </div>
-            <h3 class="text-xl font-black text-slate-800">Soporte ortopédico</h3>
-            <p class="text-slate-600 mt-2">Diseñados por especialistas.</p>
         </div>
-
-        <!-- Tarjeta 3: Personalizados -->
-        <div class="group bg-white p-6 rounded-3xl border-[3px] border-slate-900 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-300">
-            <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-4 border-2 border-slate-900">
-                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063189.png" class="w-10 h-10">
-            </div>
-            <h3 class="text-xl font-black text-slate-800">Personalizados</h3>
-            <p class="text-slate-600 mt-2">Colores, temas y estilo únicos.</p>
-        </div>
-
     </div>
-</section>
+            <!-- Botones de Control Manual del Slider -->
+            <div class="flex justify-center items-center gap-3 mt-8">
+                <button onclick="currentSlide(0)" id="dot0" class="w-6 h-3 rounded-none bg-cyan-700 transition-all"></button>
+                <button onclick="currentSlide(1)" id="dot1" class="w-3 h-3 rounded-none bg-slate-400 transition-all"></button>
+            </div>
+
+        </div>
     </section>
 
-   <section id="catalogo" class="py-16 bg-blue-50">
-    <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center text-slate-800 mb-12">Nuestro Catálogo</h2>
+
+<!-- SECCIÓN INFORMATIVA / BENEFICIOS ORTOOK -->
+    <section class="py-16 md:py-24 bg-white/60 backdrop-blur-md border-y border-cyan-100/50 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto space-y-20">
+
+            <!-- 1. ¿QUIÉNES SOMOS? (Enfoque emocional y cercano con Personalización) -->
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-left" data-aos="fade-right">
+                   
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                        Cuidamos cada pisada para que ellos <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 to-blue-700">conquisten el mundo.</span>
+                    </h2>
+                    <p class="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
+                        En <strong class="text-slate-900">Ortoook</strong> entendemos que los grandes sueños comienzan con pasos firmes. No solo vendemos zapatos; creamos armadura ortopédica inteligente diseñada exclusivamente para el desarrollo infantil. Fusionamos la precisión clínica con la magia que los niños necesitan para correr, saltar y jugar sin límites.
+                    </p>
         
-       <!-- productos-->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            
-            <div class="bg-white rounded-[30px] border-[4px] border-slate-900 p-6 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-                <img src="{{ url_for('static', filename='imagenes/02-removebg-preview.png') }}" alt="Rosa Nube" class="w-full h-64 object-cover rounded-2xl mb-4">
-                <span class="bg-yellow-200 px-3 py-1 rounded-full text-xs font-bold uppercase">Más vendido</span>
-                
-                <p class="text-2xl font-bold text-pink-600 mb-4">$799</p>
-                <a href="#" class="block text-center bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition-all">Personalizar ↗</a>
+                </div>
+
+                <!-- Tarjeta de Personalización Mejorada -->
+                <div class="relative group" data-aos="fade-left">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                    <div class="relative bg-gradient-to-br from-cyan-900 to-blue-900 p-8 sm:p-10 rounded-2xl text-white space-y-6 shadow-2xl">
+                        <span class="bg-cyan-400/20 text-cyan-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Personalización Exclusiva</span>
+                        
+                        <h3 class="text-2xl font-black">Zapatos únicos personalizados a su gusto</h3>
+                        
+                        <p class="text-cyan-100 text-sm leading-relaxed">
+                            Logramos lo imposible: unimos la corrección ortopédica estricta con la opción de personalizarlos a su medida. Elige los colores, detalles y temáticas que más les fascinan para que los lleven puestos con una sonrisa.
+                        </p>
+                        
+                        <div class="flex items-center gap-2 text-cyan-300 font-bold text-sm">
+                            <span> Diseños a su medida, comodidad que enamora</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!-- 2. NUESTROS SERVICIOS (Más dinámicos y claros) -->
+            <div class="space-y-12 text-center" data-aos="fade-up">
+                <div class="max-w-2xl mx-auto space-y-3">
+                    
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                        ¿Cómo transformamos la salud de sus pies?
+                    </h2>
+                    <p class="text-slate-600 text-base">
+                        Un servicio diseñado a la medida de los más pequeños y pensado para la tranquilidad de los papás.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8 text-left">
+                    <!-- Servicio 1 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-cyan-900/5 hover:-translate-y-1 transition-all duration-300 space-y-4 group">
+                        <div class="w-14 h-14 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-2xl font-bold group-hover:bg-cyan-600 group-hover:text-white transition-colors duration-300">
+                            🎯
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900">Diagnóstico y Asesoría Experta</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Te guiamos paso a paso para identificar el tipo de soporte plantar que tu hijo necesita según su edad, previniendo desviaciones a futuro.
+                        </p>
+                    </div>
+
+                    <!-- Servicio 2 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-cyan-900/5 hover:-translate-y-1 transition-all duration-300 space-y-4 group">
+                        <div class="w-14 h-14 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-2xl font-bold group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                            🛡️
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900">Calzado Ergonómico y Ortopédico</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Contrafuertes firmes, suelas flexibles con memoria y hormas especiales que corrigen el pie plano y aseguran una postura corporal correcta.
+                        </p>
+                    </div>
+
+                    <!-- Servicio 3 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-cyan-900/5 hover:-translate-y-1 transition-all duration-300 space-y-4 group sm:col-span-2 md:col-span-1">
+                        <div class="w-14 h-14 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl font-bold group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                            📈
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900">Seguimiento de Crecimiento</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Acompañamos cada etapa de su desarrollo infantil evaluando el desgaste y adaptando el soporte conforme sus pequeños pies van creciendo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. ¿POR QUÉ ELEGIR ORTOOK? (Alto impacto visual y comercial) -->
+            <div class="relative overflow-hidden bg-gradient-to-r from-slate-900 via-cyan-950 to-blue-950 rounded-3xl p-8 sm:p-12 text-white shadow-2xl" data-aos="zoom-in">
+                <!-- Círculos de luz decorativos de fondo -->
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-20 -top-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 grid md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6 text-left">
+                        <span class="bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-md border border-cyan-500/30">
+                            El Favorito de las Familias
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+                            ¿Por qué elegir <span class="text-cyan-400">Ortoook</span> para proteger sus pies?
+                        </h2>
+                        <p class="text-slate-300 text-base leading-relaxed">
+                            Sabemos lo exigente que es cuidar la salud de tus hijos. Por eso creamos una experiencia donde la prescripción médica se fusiona con la personalización y diversión que ellos buscan.
+                        </p>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            
+                            <span class="bg-white/10 text-cyan-200 text-xs font-bold px-3 py-1.5 rounded-lg border border-white/10"> Protección ortopédica real</span>
+                            <span class="bg-white/10 text-cyan-200 text-xs font-bold px-3 py-1.5 rounded-lg border border-white/10"> Personalizados a su gusto</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center hover:bg-white/10 transition">
+                            <h4 class="font-black text-3xl sm:text-4xl text-cyan-400">100%</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Adaptados para el desarrollo óseo</p>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center hover:bg-white/10 transition">
+                            <h4 class="font-black text-3xl sm:text-4xl text-cyan-400">A su Gusto</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Diseños personalizados únicos</p>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center hover:bg-white/10 transition">
+                            <h4 class="font-black text-3xl sm:text-4xl text-cyan-400">Ergonómicos</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Máximo confort diario</p>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center hover:bg-white/10 transition">
+                            <h4 class="font-black text-3xl sm:text-4xl text-cyan-400">Confiables</h4>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-2 font-medium">Avalados por especialistas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+   <!-- SECCIÓN: NUESTROS SERVICIOS -->
+    <section id="salud" class="py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-b from-slate-50/40 via-cyan-50/20 to-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto space-y-12 relative z-10">
             
-            <div class="bg-white rounded-[30px] border-[4px] border-slate-900 p-6 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-                <img src="{{ url_for('static', filename='imagenes/050.png') }}" alt="Rosa Nube" class="w-full h-64 object-cover rounded-2xl mb-4">
-                <span class="bg-purple-200 px-3 py-1 rounded-full text-xs font-bold uppercase">Increible</span>
+            <!-- Cabecera de la Sección con animación suave -->
+            <div class="text-center max-w-2xl mx-auto space-y-3" data-aos="fade-down" data-aos-duration="1000">
                
-                <p class="text-2xl font-bold text-pink-600 mb-4">$799</p>
-                <a href="#" class="block text-center bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition-all">Personalizar ↗</a>
+                <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                    Nuestros <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 to-blue-700">Servicios</span>
+                </h2>
+                <p class="text-lg sm:text-xl text-slate-600 font-medium">
+                    Un servicio diseñado a la medida de los más pequeños y pensado para la total tranquilidad de los papás.
+                </p>
+                <div class="w-20 h-1.5 mx-auto bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full mt-4"></div>
             </div>
 
+            <!-- Cuadrícula de Servicios (Fina y Compacta) -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Servicio 1: Venta de Zapatos Ortopédicos -->
+                <div class="bg-white p-6 rounded-2xl border border-cyan-100/80 shadow-md shadow-cyan-950/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
+                    <div class="space-y-3">
+                        
+                        <h3 class="text-xl font-black text-slate-900 group-hover:text-cyan-700 transition-colors">
+                            Venta de Zapatos Ortopédicos
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Ofrecemos calzado ortopédico infantil diseñado para brindar comodidad, estabilidad y el soporte necesario para el correcto desarrollo de los pies.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 text-cyan-700 font-bold text-xs">
+                       
+                    </div>
+                </div>
+
+                <!-- Servicio 2: Personalización de Calzado -->
+                <div class="bg-white p-6 rounded-2xl border border-cyan-100/80 shadow-md shadow-cyan-950/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 group flex flex-col justify-between relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute top-0 right-0 bg-gradient-to-l from-cyan-500/10 to-transparent w-24 h-24 rounded-bl-full pointer-events-none"></div>
+                    <div class="space-y-3 relative z-10">
+                        
+                        <h3 class="text-xl font-black text-slate-900 group-hover:text-blue-700 transition-colors">
+                            Personalización de Calzado
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Haz únicos los zapatos de tu hija. Personalizamos cada par con colores, personajes y detalles especiales para reflejar su personalidad.
+                        </p>
+                    </div>
+                    
+                </div>
+
+                <!-- Servicio 3: Asesoría para Elegir la Talla -->
+                <div class="bg-white p-6 rounded-2xl border border-cyan-100/80 shadow-md shadow-cyan-950/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="300">
+                    <div class="space-y-3">
+                        
+                        <h3 class="text-xl font-black text-slate-900 group-hover:text-indigo-700 transition-colors">
+                            Asesoría para Elegir la Talla
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Te ayudamos a seleccionar la talla adecuada para garantizar un ajuste cómodo y favorecer el desarrollo saludable de los pies.
+                        </p>
+                    </div>
+                    
+                </div>
+
+                <!-- Servicio 4: Orientación sobre Calzado Ortopédico -->
+                <div class="bg-white p-6 rounded-2xl border border-cyan-100/80 shadow-md shadow-cyan-950/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="400">
+                    <div class="space-y-3">
+                        
+                        <h3 class="text-xl font-black text-slate-900 group-hover:text-cyan-700 transition-colors">
+                            Orientación Ortopédica
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Si tienes dudas sobre qué tipo de zapato necesita tu hija, te orientamos para ayudarte a elegir el modelo más adecuado según sus necesidades.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 text-cyan-700 font-bold text-xs">
+                       
+                    </div>
+                </div>
+
+                <!-- Servicio 5: Atención Personalizada -->
+                <div class="bg-white p-6 rounded-2xl border border-cyan-100/80 shadow-md shadow-cyan-950/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 space-y-4 group flex flex-col justify-between sm:col-span-2 lg:col-span-2 relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+                    <div class="absolute bottom-0 right-0 bg-gradient-to-tl from-blue-500/10 to-transparent w-32 h-32 rounded-tl-full pointer-events-none"></div>
+                    <div class="space-y-3 relative z-10">
+                        
+                        <h3 class="text-xl font-black text-slate-900 group-hover:text-blue-700 transition-colors">
+                            Atención Personalizada
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed max-w-xl">
+                            Nuestro equipo está listo para responder tus preguntas y acompañarte durante todo el proceso de compra, asegurando que encuentres exactamente lo que tu pequeña necesita con calidez y confianza.
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 text-blue-700 font-bold text-xs relative z-10">
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+   <!-- SECCIÓN COLECCIÓN -->
+<section id="coleccion" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto overflow-hidden">
+    <div class="grid md:grid-cols-3 gap-6">
+        
+        <!-- Imagen 1 -->
+        <div class="relative h-[480px] sm:h-[540px] rounded-none overflow-hidden shadow-lg group bg-slate-200" data-aos="fade-up" data-aos-delay="100">
+            <img src="static/imagenes/ima2.png" alt="OrtoKids Dinosaurios" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        </div> <!-- <-- Aquí faltaba cerrar este div -->
+
+        <!-- Imagen 2 -->
+        <div class="relative h-[480px] sm:h-[540px] rounded-none overflow-hidden shadow-lg group bg-slate-200" data-aos="fade-up" data-aos-delay="200">
+            <img src="static/imagenes/imag6.png" alt="OrtoKids Dinosaurios" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        </div>
+
+        <!-- Imagen 3 -->
+        <div class="relative h-[480px] sm:h-[540px] rounded-none overflow-hidden shadow-lg group bg-slate-200" data-aos="fade-up" data-aos-delay="300">
+            <img src="static/imagenes/imag7.png" alt="OrtoKids Dinosaurios" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        </div> <!-- <-- Asegúrate de cerrar este también -->
+
+    </div>
+</section>
+
+<!-- SECCIÓN: BLOG DETALLADO (Información sobre Calzado Ortopédico Infantil) -->
+    <section id="blog" class="py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-white via-cyan-50/20 to-slate-50/50">
+        <div class="max-w-4xl mx-auto">
             
-            <div class="bg-white rounded-[30px] border-[4px] border-slate-900 p-6 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-                <img src="{{ url_for('static', filename='imagenes/030.png') }}" alt="Rosa Nube" class="w-full h-64 object-cover rounded-2xl mb-4">
-                <span class="bg-pink-200 px-3 py-1 rounded-full text-xs font-bold uppercase">Edición Especial</span>
-             
-                <p class="text-2xl font-bold text-pink-600 mb-4">$849</p>
-                <a href="#" class="block text-center bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition-all">Personalizar ↗</a>
-            </div>
+            <!-- Cabecera del Artículo -->
+            <header class="mb-16 text-center space-y-4" data-aos="fade-up">
+                <span class="inline-block bg-cyan-500/10 text-cyan-800 text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full border border-cyan-500/20 shadow-sm">
+                    Guía para Padres 
+                </span>
+                
+                <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight max-w-3xl mx-auto">
+                    ¿Cómo saber si tu hijo necesita <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 to-blue-700">zapatos ortopédicos?</span>
+                </h1>
+                
+                <p class="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
+                    El desarrollo de los pies durante la infancia es fundamental para una buena postura y una marcha saludable. Detectar a tiempo cualquier alteración previene molestias futuras.
+                </p>
+                
+                <div class="w-24 h-1.5 mx-auto bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full mt-6"></div>
+            </header>
 
-           
-            <div class="bg-white rounded-[30px] border-[4px] border-slate-900 p-6 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-                <img src="{{ url_for('static', filename='imagenes/040.png') }}" alt="Rosa Nube" class="w-full h-64 object-cover rounded-2xl mb-4">
-                <span class="bg-blue-200 px-3 py-1 rounded-full text-xs font-bold uppercase">Brillante</span>
+            <!-- Contenido Principal del Blog -->
+            <article class="space-y-12" data-aos="fade-up" data-aos-delay="100">
+                
+                <!-- Introducción Destacada -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-cyan-100 shadow-xl shadow-cyan-950/5 space-y-6">
+                    <p class="text-lg sm:text-xl font-medium text-slate-800 leading-relaxed">
+                        Como padres, es natural preocuparse por el crecimiento de nuestros pequeños. Una de las dudas más comunes es si el tipo de calzado que utilizan es el adecuado, especialmente si notamos alguna irregularidad al caminar o en la forma de sus pies. Aunque no todos los niños necesitan zapatos ortopédicos, es vital prestar atención a ciertas señales.
+                    </p>
+                    <p class="text-slate-600 text-base leading-relaxed m-0">
+                        A continuación, te detallamos las <strong>4 señales principales</strong> que podrían indicar que tu hijo necesita una valoración con un especialista para determinar si el calzado correctivo es la solución ideal.
+                    </p>
+                </div>
+
+                <!-- Tarjeta 1 -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-cyan-100 shadow-lg shadow-cyan-950/5 hover:shadow-xl transition-all space-y-4">
+                    <div class="flex items-center gap-4">
+                        
+                        <h3 class="text-2xl sm:text-3xl font-black text-slate-900">
+                            1. Pies planos o arco poco desarrollado
+                        </h3>
+                    </div>
+                    <p class="text-slate-600 text-base sm:text-lg leading-relaxed pl-0 sm:pl-18">
+                        Los pies planos son una de las causas más frecuentes por las que se recomienda el uso de zapatos ortopédicos infantiles. Si al estar de pie el arco del pie casi no se aprecia o notas que los pies se inclinan hacia adentro al caminar (pronación excesiva), es recomendable acudir con un especialista.
+                    </p>
+                    <div class="bg-cyan-50/70 border-l-4 border-cyan-600 p-4 rounded-r-2xl ml-0 sm:ml-18">
+                        <p class="text-cyan-950 font-bold text-sm sm:text-base m-0">
+                             Los zapatos ortopédicos brindan el soporte adecuado al arco plantar, favoreciendo un desarrollo correcto del pie durante la etapa de crecimiento.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-cyan-100 shadow-lg shadow-cyan-950/5 hover:shadow-xl transition-all space-y-6">
+                    <div class="flex items-center gap-4">
+                        
+                        <h3 class="text-2xl sm:text-3xl font-black text-slate-900">
+                            2. Forma de caminar diferente a lo normal
+                        </h3>
+                    </div>
+                    <p class="text-slate-600 text-base sm:text-lg leading-relaxed pl-0 sm:pl-18">
+                        La manera en que camina tu hijo puede revelar si existe algún problema biomecánico en sus pies o piernas. Observa si presenta alguna de estas conductas de forma repetitiva:
+                    </p>
+                    <ul class="grid sm:grid-cols-2 gap-3 pl-0 sm:pl-18 list-none">
+                        <li class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-slate-700 font-medium text-sm flex items-start gap-2">
+                            <span class="text-cyan-600 font-bold">•</span> Camina de puntitas de forma constante después de los 3 años.
+                        </li>
+                        <li class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-slate-700 font-medium text-sm flex items-start gap-2">
+                            <span class="text-cyan-600 font-bold">•</span> Se tropieza con frecuencia o parece torpe al correr.
+                        </li>
+                        <li class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-slate-700 font-medium text-sm flex items-start gap-2">
+                            <span class="text-cyan-600 font-bold">•</span> Camina con los pies hacia adentro (pichones) o hacia afuera.
+                        </li>
+                        <li class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-slate-700 font-medium text-sm flex items-start gap-2">
+                            <span class="text-cyan-600 font-bold">•</span> El desgaste de las suelas de sus zapatos es muy desigual.
+                        </li>
+                        <li class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-slate-700 font-medium text-sm flex items-start gap-2 sm:col-span-2">
+                            <span class="text-cyan-600 font-bold">•</span> Se queja de cansancio rápidamente o evita caminar largas distancias.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-cyan-100 shadow-lg shadow-cyan-950/5 hover:shadow-xl transition-all space-y-4">
+                    <div class="flex items-center gap-4">
+                        
+                        <h3 class="text-2xl sm:text-3xl font-black text-slate-900">
+                            3. Dolor frecuente en pies o piernas
+                        </h3>
+                    </div>
+                    <div class="text-slate-600 text-base sm:text-lg leading-relaxed pl-0 sm:pl-18 space-y-3">
+                        <p class="m-0">
+                            Es fundamental recordar que <strong class="text-slate-900">los niños no deberían sentir dolor</strong> después de realizar actividades normales propias de la infancia, como jugar, caminar o correr.
+                        </p>
+                        <p class="m-0">
+                            Si tu hijo menciona molestias frecuentes en los pies, tobillos, rodillas o espalda baja, podría necesitar un mayor soporte postural. Un calzado ortopédico adecuado distribuye correctamente el peso corporal y alivia la tensión articular.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-cyan-100 shadow-lg shadow-cyan-950/5 hover:shadow-xl transition-all space-y-4">
+                    <div class="flex items-center gap-4">
+                        
+                        <h3 class="text-2xl sm:text-3xl font-black text-slate-900">
+                            4. Diferencia en la longitud de las piernas
+                        </h3>
+                    </div>
+                    <div class="text-slate-600 text-base sm:text-lg leading-relaxed pl-0 sm:pl-18 space-y-3">
+                        <p class="m-0">
+                            Una ligera diferencia en la longitud de ambas piernas puede ser normal durante el desarrollo. Sin embargo, cuando esta diferencia es más evidente, afecta significativamente la postura y la columna.
+                        </p>
+                        <p class="m-0">
+                            En estos casos, se emplean zapatos ortopédicos con adaptaciones especiales (como elevaciones internas o en suela) para compensar la simetría y asegurar una estabilidad perfecta al caminar.
+                        </p>
+                    </div>
+                </div>
+
                
-                <p class="text-2xl font-bold text-pink-600 mb-4">$859</p>
-                <a href="#" class="block text-center bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition-all">Personalizar ↗</a>
-            </div>
 
-        </div>
-    </div>
-</section>
+            <!-- Tarjeta Final Unificada: Compromiso Ortoook -->
+                <div class="bg-gradient-to-br from-slate-950 via-cyan-950 to-blue-950 text-white p-8 sm:p-12 rounded-3xl shadow-2xl relative overflow-hidden space-y-4" data-aos="zoom-in">
+                    <!-- Efecto visual de fondo -->
+                    <div class="absolute -right-16 -top-16 w-56 h-56 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-<!-- ENCABEZADO MEJORADO -->
-<div class="text-center py-16 bg-gradient-to-b from-slate-50 to-white">
-    <div class="inline-block px-4 py-1 mb-4 text-sm font-bold tracking-widest text-white uppercase bg-slate-900 rounded-full">
-        Edición Limitada
-    </div>
-    <h2 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-4">
-        Diseña tus <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-500">Orto Ook</span>
-    </h2>
-    <p class="text-slate-500 text-xl font-medium max-w-lg mx-auto">Cada par cuenta una historia. Personaliza cada detalle y crea algo único para ti.</p>
-</div>
-
-<section id="personalizacion" class="scroll-mt-24 pb-20 bg-slate-50">
-    <div class="max-w-6xl mx-auto px-4 md:px-6">
-        
-        <!-- GRID PRINCIPAL -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-12">
-            
-            <!-- PREVISUALIZACIÓN -->
-            <!-- Ahora el sticky solo aplica en pantallas grandes para no romper el layout móvil -->
-            <div class="bg-white p-6 md:p-8 rounded-[2rem] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] lg:sticky lg:top-28">
-                <div class="bg-slate-100 rounded-3xl p-6 flex items-center justify-center h-[300px] md:h-[400px] overflow-hidden">
-                    <img id="zapatito-img" src="{{ url_for('static', filename='imagenes/tenis.png') }}" 
-                         class="w-full max-w-[280px] transition-all duration-500 animate-[float_4s_ease-in-out_infinite]">
-                </div>
-                <div class="mt-8">
-                    <h3 class="text-2xl md:text-3xl font-black text-slate-900">Tenis Orto Ook</h3>
-                    <p id="desc-text" class="text-base md:text-lg text-slate-500 font-medium mt-2 transition-opacity duration-300">Rosa · Blanca · Spider · Talla 21</p>
-                </div>
-            </div>
-
-            <!-- PANEL DE CONTROL -->
-            <!-- Quitamos altura fija en móviles para mejor experiencia -->
-            <div class="bg-white p-6 md:p-10 rounded-[2rem] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] h-auto md:h-[600px] overflow-y-auto custom-scrollbar space-y-8">
-                
-                <style>
-                    .btn-hover { transition: all 0.2s ease; }
-                    .btn-hover:hover { transform: translateY(-3px); }
-                    .btn-selected { border-color: #0f172a !important; background-color: #f8fafc; }
-                    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-                    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-                    .custom-scrollbar::-webkit-scrollbar-thumb { background: #0f172a; border-radius: 10px; }
-                </style>
-
-                <!-- Color Principal -->
-                <div>
-                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">1. Color Principal</h4>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="grupo-colores">
-                        <button onclick="seleccionar(this, 'Rosa', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-pink-500 mb-2"></div><span class="text-[10px] font-bold">Rosa</span></button>
-                        <button onclick="seleccionar(this, 'Turquesa', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-cyan-500 mb-2"></div><span class="text-[10px] font-bold">Turque.</span></button>
-                        <button onclick="seleccionar(this, 'Amarillo', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-yellow-400 mb-2"></div><span class="text-[10px] font-bold">Amaril.</span></button>
-                        <button onclick="seleccionar(this, 'Verde', 'color')" class="btn-color btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-green-500 mb-2"></div><span class="text-[10px] font-bold">Verde</span></button>
+                    <!-- Sección Compromiso Ortoook -->
+                    <div class="space-y-4 relative z-10 text-center sm:text-left">
+                        <h4 class="text-xl sm:text-2xl font-bold text-cyan-300">
+                            Compromiso con la salud de sus pies en Ortoook
+                        </h4>
+                        <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-3xl">
+                            En <strong>Ortoook</strong> entendemos cada paso. Diseñamos calzado ortopédico infantil que fusiona la más alta precisión clínica con la personalización y diversión que los niños aman, logrando que usen sus zapatos felices, cómodos y seguros todos los días.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Color Suela -->
-                <div>
-                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">2. Color de suela</h4>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="grupo-suela">
-                        <button onclick="seleccionar(this, 'Blanca', 'suela')" class="btn-suela btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-white border border-slate-300 mb-2"></div><span class="text-[10px] font-bold">Blanca</span></button>
-                        <button onclick="seleccionar(this, 'Crema', 'suela')" class="btn-suela btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><div class="w-8 h-8 rounded-full bg-yellow-50 border border-slate-300 mb-2"></div><span class="text-[10px] font-bold">Crema</span></button>
-                    </div>
-                </div>
-
-                <!-- Personaje -->
-                <div>
-                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">3. Personaje</h4>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="grupo-personajes">
-                        <button onclick="seleccionar(this, 'Spider', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0101.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Spider</span></button>
-                        <button onclick="seleccionar(this, 'Minions', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0303.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Princesas</span></button>
-                        <button onclick="seleccionar(this, 'Spider', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/0202.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Minions</span></button>
-                        <button onclick="seleccionar(this, 'Minions', 'personaje')" class="btn-personaje btn-hover border-[3px] border-slate-200 p-3 rounded-2xl flex flex-col items-center"><img src="{{ url_for('static', filename='imagenes/00404.png') }}" class="w-16 h-16 mb-2 object-contain"><span class="text-[10px] font-bold">Guerreras</span></button>
-                    </div>
-                </div>
-
-                <!-- Talla -->
-                <div>
-                    <h4 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-4">4. Talla</h4>
-                    <div class="flex flex-wrap gap-2" id="grupo-tallas">
-                        <script>
-                            for(let i=18; i<=26; i++) {
-                                document.write(`<button onclick="seleccionar(this, '${i}', 'talla')" class="btn-talla btn-hover border-[3px] border-slate-200 px-4 py-2 rounded-lg font-black text-xs hover:border-slate-900">${i}</button>`);
-                            }
-                        </script>
-                    </div>
-                </div>
-            </div>
+            </article>
         </div>
-    </div>
-</section>
+    </section>
 
-       <!-- 6. DATOS DEL PEDIDO -->
-<section class="max-w-6xl mx-auto px-4 py-8">
-    <div class="bg-white p-6 md:p-10 rounded-[2rem] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-        <h4 class="font-black text-slate-900 uppercase text-sm tracking-widest mb-8">6. Datos del pedido</h4>
-        
-        <!-- Grid adaptable: 1 columna en móvil, 2 en tablets/escritorio -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            <input type="text" placeholder="Nombre del peque" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
-            <input type="text" placeholder="Tu nombre *" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
-            <input type="tel" placeholder="Teléfono / WhatsApp *" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
-            <input type="email" placeholder="Correo (opcional)" class="w-full p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none transition-colors">
-        </div>
-        
-        <textarea placeholder="Notas adicionales..." class="w-full mt-6 p-4 border-[3px] border-slate-200 rounded-2xl font-bold focus:border-slate-900 outline-none h-24 resize-none"></textarea>
-        
-        <!-- Botones adaptables -->
-        <div class="flex flex-col gap-4 mt-8">
-            <div class="flex flex-col sm:flex-row gap-4">
-                <button class="w-full sm:w-1/2 border-[3px] border-slate-900 py-4 rounded-2xl font-black text-slate-900 hover:bg-slate-100 transition-all">Guardar pedido</button>
-                <button class="w-full sm:w-1/2 bg-rose-500 border-[3px] border-slate-900 py-4 rounded-2xl font-black text-white hover:bg-rose-600 transition-all shadow-[4px_4px_0px_#1A1B41]">Pagar</button>
-            </div>
-            <p class="text-xs md:text-sm text-slate-400 font-medium italic text-center sm:text-left">Pago seguro vía Stripe · o paga en sucursal.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Encabezado de la sección -->
-<div class="text-center mt-8 mb-4">
-    <div class="inline-flex items-center space-x-2 bg-green-100 px-4 py-1.5 rounded-full border-2 border-green-200">
-        <span class="text-green-600 text-lg">📍</span>
-        <span class="text-green-700 font-bold text-sm uppercase tracking-widest">Ubicaciones</span>
-    </div>
-    <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mt-6">
-        Visítanos en <span class="text-blue-500">Zapopan</span> y <span class="text-green-500">Guadalajara</span>
-    </h2>
-    <p class="text-slate-500 mt-4 text-lg font-medium">Agenda tu consulta y encuentra el diseño que siempre quisiste lucir.</p>
-</div>
-
-<!-- Sección de Sucursales (Compacta) -->
-<section id="sucursales" class="py-8 container mx-auto px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        
-        <!-- Sucursal Zapopan SUR -->
-        <div class="bg-white rounded-[30px] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] overflow-hidden">
-            <div class="h-64 relative">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3733.3855589870535!2d-103.42436422474773!3d20.65439508090748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428ae7d606554b9%3A0x6b8f3708170c0c6c!2sR%C3%ADo%20Cuitzmala%205439%2C%20Las%20%C3%81guilas%2C%2045080%20Zapopan%2C%20Jal.!5e0!3m2!1ses-419!2smx!4v1721245000000!5m2!1ses-419!2smx" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                <a href="https://www.google.com/maps/place/?q=place_id:ChIJjbS51d2tKIQRLxDRPSya3EM" target="_blank" class="absolute top-4 left-4 bg-white px-4 py-2 rounded-lg border-2 border-slate-900 font-bold text-sm shadow-md hover:bg-slate-100 z-10">
-                    Abrir en Maps ↗
-                </a>
-            </div>
-            <div class="bg-[#e0f7fa] p-8 border-t-[4px] border-slate-900">
-                <h3 class="font-bold text-2xl text-slate-900">Sucursal Zapopan SUR</h3>
-                <p class="text-blue-600 font-bold text-lg mb-3">Las Águilas</p>
-                <p class="text-slate-700 font-medium mb-6">📍 Río Cuitzmala 5439 A, Col. Las Águilas, Zapopan</p>
-                <a href="https://www.google.com/maps/place/?q=place_id:ChIJjbS51d2tKIQRLxDRPSya3EM" target="_blank" class="inline-flex items-center px-6 py-3 border-[3px] border-slate-900 rounded-full font-bold text-slate-900 bg-white hover:bg-slate-900 hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]">
-                    ➤ Cómo llegar
-                </a>
-            </div>
-        </div>
-
-        <!-- Sucursal Guadalajara NORTE -->
-        <div class="bg-white rounded-[30px] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] overflow-hidden">
-            <div class="h-64 relative">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3731.810565038316!2d-103.32620782474605!3d20.71804918084534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428a8a4f489b4f9%3A0x6739b0337373f1d3!2sAv.%20Experiencia%202721%2C%20Santa%20Elena%20de%20la%20Cruz%2C%2044290%20Guadalajara%2C%20Jal.!5e0!3m2!1ses-419!2smx!4v1721245100000!5m2!1ses-419!2smx" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                <a href="https://www.google.com/maps/search/?api=1&query=Av.+Experiencia+2721,+Santa+Elena+de+la+Cruz,+Guadalajara" target="_blank" class="absolute top-4 left-4 bg-white px-4 py-2 rounded-lg border-2 border-slate-900 font-bold text-sm shadow-md hover:bg-slate-100 z-10">
-                    Abrir en Maps ↗
-                </a>
-            </div>
-            <div class="bg-[#fce4ec] p-8 border-t-[4px] border-slate-900">
-                <h3 class="font-bold text-2xl text-slate-900">Sucursal Guadalajara NORTE</h3>
-                <p class="text-blue-600 font-bold text-lg mb-3">Santa Elena de la Cruz</p>
-                <p class="text-slate-700 font-medium mb-6">📍 Av. Experiencia 2721, Unidad Médica, Consultorio #4</p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Av.+Experiencia+2721,+Santa+Elena+de+la+Cruz,+Guadalajara" target="_blank" class="inline-flex items-center px-6 py-3 border-[3px] border-slate-900 rounded-full font-bold text-slate-900 bg-white hover:bg-slate-900 hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]">
-                    ➤ Cómo llegar
-                </a>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-    <!-- SECCIÓN DE CONTACTO -->
-<section id="contacto" class="py-16 container mx-auto px-6">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        
-        <!-- Columna Izquierda: Información -->
-        <div>
-            <div class="inline-flex items-center px-4 py-1 rounded-full border-[2px] border-slate-900 font-bold text-sm mb-6">
-                Contacto
-            </div>
-            <h2 class="text-5xl font-bold text-slate-900 mb-4">
-                ¿Hablamos? <span class="text-red-400">Estamos aquí</span>
-            </h2>
-            <p class="text-slate-600 text-lg mb-8">
-                Camina con estilo, comodidad y salud. Escríbenos para dudas, tallas o pedidos especiales.
-            </p>
-            
-            <div class="space-y-4">
-                <div class="flex items-center gap-3 text-slate-900 font-bold">
-                    <div class="bg-green-100 p-2 rounded-full">💬</div> WhatsApp 334 462 1544
-                </div>
-                <div class="flex items-center gap-3 text-slate-900 font-bold">
-                    <div class="bg-yellow-100 p-2 rounded-full">📞</div> 334 462 1544
-                </div>
-                <div class="flex items-center gap-3 text-slate-900 font-bold">
-                    <div class="bg-blue-100 p-2 rounded-full">✉️</div> hola@ortoook.com
-                </div>
-            </div>
-        </div>
-
-        <!-- Columna Derecha: Formulario (Diseño exacto) -->
-        <div class="bg-white p-8 rounded-[30px] border-[4px] border-slate-900 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-            <form class="space-y-4">
-                <input type="text" placeholder="Nombre *" class="w-full p-4 border-[3px] border-slate-900 rounded-[15px] font-bold placeholder-slate-400 focus:outline-none">
-                <input type="email" placeholder="Correo *" class="w-full p-4 border-[3px] border-slate-900 rounded-[15px] font-bold placeholder-slate-400 focus:outline-none">
-                <input type="tel" placeholder="Teléfono (opcional)" class="w-full p-4 border-[3px] border-slate-900 rounded-[15px] font-bold placeholder-slate-400 focus:outline-none">
-                <textarea placeholder="Tu mensaje *" rows="4" class="w-full p-4 border-[3px] border-slate-900 rounded-[15px] font-bold placeholder-slate-400 focus:outline-none"></textarea>
-                
-                <button type="submit" class="w-full bg-green-500 border-[3px] border-slate-900 text-white font-bold py-4 rounded-[15px] shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-green-600 transition-all">
-                    Enviar mensaje 
-                </button>
-            </form>
-        </div>
-
-    </div>
-</section>
-
-    <!-- LÓGICA DE CONTROL DEL SLIDER AUTOMÁTICO -->
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.banner-slide');
-        const bullets = [document.getElementById('bullet-0'), document.getElementById('bullet-1')];
-        const totalSlides = slides.length;
-        let autoPlayTimer;
-
-        function changeSlide(index) {
-            slides[currentSlide].classList.remove('active');
-            bullets[currentSlide].classList.remove('bg-blue-500', 'w-8');
-            bullets[currentSlide].classList.add('bg-slate-300', 'w-3');
-            
-            currentSlide = index;
-            
-            slides[currentSlide].classList.add('active');
-            bullets[currentSlide].classList.remove('bg-slate-300', 'w-3');
-            bullets[currentSlide].classList.add('bg-blue-500', 'w-8');
-
-            resetAutoPlay();
-        }
-
-        function nextSlide() {
-            let next = (currentSlide + 1) % totalSlides;
-            changeSlide(next);
-        }
-
-        function startAutoPlay() {
-            autoPlayTimer = setInterval(nextSlide, 5000); 
-        }
-
-        function resetAutoPlay() {
-            clearInterval(autoPlayTimer);
-            startAutoPlay();
-        }
-
-        startAutoPlay();
-    </script>
-
-
-    <!-- FOOTER (Ahora sí, ancho completo real) -->
-<footer class="bg-[#1a0f2e] text-white py-16 w-full">
-    <!-- El max-w-7xl controla el ancho del contenido, pero el footer (arriba) tiene w-full -->
-    <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-        
-        <!-- Columna 1 -->
-        <div>
-            <div class="flex items-center gap-3 mb-4">
-                <span class="text-3xl"></span>
-                <h3 class="text-2xl font-bold">Orto Ook</h3>
-            </div>
-            <p class="text-slate-300">Tenis ortopédicos personalizados para cada pequeña aventura.</p>
-        </div>
-
-        <!-- Columna 2 -->
-        <div>
-            <h4 class="font-bold mb-4">📍 Contacto</h4>
-            <ul class="text-slate-300 space-y-2">
-                <li>Zapopan: Río Cuitzmala 5439 A</li>
-                <li>Guadalajara: Av. Patria 123</li>
-                <li>📞 334 462 1544</li>
-                <li>✉️ hola@ortoook.com</li>
-            </ul>
-        </div>
-
-        <!-- Columna 3: Enlaces actualizados según tu menú -->
-        <div>
-            
-            <ul class="text-slate-300 space-y-2">
-                <li><a href="#inicio" class="hover:text-white">Inicio</a></li>
-                <li><a href="#catalogo" class="hover:text-white">Catálogo</a></li>
-                <li><a href="#personalizacion" class="hover:text-white">Personalización</a></li>
-                <li><a href="#sucursales" class="hover:text-white">Ubicaciones</a></li>
-                <li><a href="#contacto" class="hover:text-white">Contacto</a></li>
-            </ul>
-        </div>
-
-        <!-- Columna 4 -->
-        <div>
-            <h4 class="font-bold mb-4">💬 Síguenos</h4>
-            <div class="flex gap-3">
-                <a href="#" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold">F</a>
-                <a href="#" class="w-10 h-10 rounded-full bg-pink-500 flex items-center justify-center font-bold">I</a>
-                <a href="#" class="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center font-bold">T</a>
-                <a href="#" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center font-bold">W</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
-<script>
-    const descripcion = document.getElementById('descripcion-tenis');
     
-    // Variables para guardar lo seleccionado
-    let colorSeleccionado = "Rosa Chicle";
-    let personajeSeleccionado = "Cohete";
-    let tallaSeleccionada = "21";
+    <!-- SECCIÓN: UBICACIONES Y SUCURSALES -->
+    <section id="ubicaciones" class="py-16 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto border-t border-cyan-200/60">
+        <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16 space-y-3" data-aos="fade-up">
+           
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Encuentra una Sucursal Cerca de Ti</h2>
+            <p class="text-slate-700 text-sm sm:text-base font-medium">Visítanos para una valoración especializada y prueba de calzado ortopédico con nuestros expertos.</p>
+        </div>
 
-    function actualizarTexto() {
-        descripcion.innerText = `${colorSeleccionado} · ${personajeSeleccionado} · Talla ${tallaSeleccionada}`;
-    }
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            
+            <!-- Sucursal Zapopan SUR -->
+            <div class="bg-white/90 backdrop-blur-sm p-6 sm:p-8 rounded-none border border-cyan-200 shadow-sm space-y-4 hover:border-cyan-500 transition flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-cyan-100 text-cyan-800 text-xs font-bold px-3 py-1 rounded-none">Sucursal Sur</span>
+                        <span class="text-2xl">📍</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900">Ortoook Zapopan SUR</h3>
+                    <p class="text-xs text-slate-700 leading-relaxed font-medium">
+                        Río Cuitzmala 5439 A, Col. Las Águilas, 45080 Zapopan, Jal.
+                    </p>
+                    <div class="pt-2 border-t border-cyan-100 space-y-1 text-xs text-slate-600">
+                        <p><strong>Zona:</strong> Las Águilas</p>
+                        <p><strong>Especialidad:</strong> Calzado y valoración infantil</p>
+                    </div>
+                </div>
+                <div class="pt-4">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Río+Cuitzmala+5439+Las+Águilas+Zapopan+Jal" target="_blank" class="inline-flex items-center justify-center w-full px-4 py-2.5 border-[2px] border-slate-900 rounded-none font-bold text-xs bg-white hover:bg-slate-900 hover:text-white transition-all shadow-[3px_3px_0px_0px_rgba(15,23,42,1)]">
+                        ➤ Abrir en Google Maps
+                    </a>
+                </div>
+            </div>
 
-    // Eventos para colores
-    document.querySelectorAll('.selector-color').forEach(btn => {
-        btn.addEventListener('click', () => {
-            colorSeleccionado = btn.getAttribute('data-valor');
-            actualizarTexto();
+            <!-- Sucursal Guadalajara NORTE -->
+            <div class="bg-white/90 backdrop-blur-sm p-6 sm:p-8 rounded-none border border-cyan-200 shadow-sm space-y-4 hover:border-cyan-500 transition flex flex-col justify-between" data-aos="fade-up" data-aos-delay="200">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-pink-100 text-pink-800 text-xs font-bold px-3 py-1 rounded-none">Sucursal Norte</span>
+                        <span class="text-2xl">📍</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900">Ortoook Guadalajara NORTE</h3>
+                    <p class="text-xs text-slate-700 leading-relaxed font-medium">
+                        Av. Experiencia 2721, Unidad Médica, Consultorio #4, Santa Elena de la Cruz, 44290 Guadalajara, Jal.
+                    </p>
+                    <div class="pt-2 border-t border-cyan-100 space-y-1 text-xs text-slate-600">
+                        <p><strong>Zona:</strong> Santa Elena de la Cruz</p>
+                        <p><strong>Especialidad:</strong> Consultorio médico y ortopedia</p>
+                    </div>
+                </div>
+                <div class="pt-4">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+Experiencia+2721+Santa+Elena+de+la+Cruz+Guadalajara" target="_blank" class="inline-flex items-center justify-center w-full px-4 py-2.5 border-[2px] border-slate-900 rounded-none font-bold text-xs bg-white hover:bg-slate-900 hover:text-white transition-all shadow-[3px_3px_0px_0px_rgba(15,23,42,1)]">
+                        ➤ Abrir en Google Maps
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="bg-[#1a0f2e] text-white pt-16 pb-12 w-full border-t border-cyan-500/20 relative overflow-hidden">
+        
+        <!-- Efecto de luz decorativo de fondo -->
+        <div class="absolute -left-20 -bottom-20 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -right-20 -top-20 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
+            
+            <!-- Columna 1: Marca -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    
+                    <h3 class="text-2xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400">Orto Ook</h3>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Tenis ortopédicos personalizados y diseñados a la medida para cada pequeña aventura, cuidando cada paso de su desarrollo.
+                </p>
+            </div>
+
+            <!-- Columna 2: Contacto & Sucursales -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-lg text-cyan-400 flex items-center gap-2">📍 Contacto</h4>
+                <ul class="text-slate-300 text-sm space-y-2.5">
+                    <li class="hover:text-white transition-colors"><strong>Zapopan:</strong> Río Cuitzmala 5439 A, Las Águilas</li>
+                    <li class="hover:text-white transition-colors"><strong>Guadalajara:</strong> Av. Experiencia 2721, Santa Elena de la Cruz</li>
+                    <li class="pt-1 flex items-center gap-2">📞 <span class="font-semibold text-white">334 462 1544</span></li>
+                    <li class="flex items-center gap-2">✉️ <span class="font-semibold text-white">hola@ortoook.com</span></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Enlaces Rápidos -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-lg text-cyan-400 flex items-center gap-2">🔗 Navegación</h4>
+                <ul class="text-slate-300 text-sm space-y-2">
+                    <li><a href="#inicio" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">▸ Inicio</a></li>
+                    <li><a href="#salud" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">▸ Nuestros servicios</a></li>
+                    <li><a href="#blog" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">▸ Blog</a></li>
+                    <li><a href="#ubicaciones" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">▸ Sucursales</a></li>
+                    
+            </div>
+
+            <!-- Columna 4: Redes Sociales -->
+            <div class="space-y-4">
+                <h4 class="font-bold text-lg text-cyan-400 flex items-center gap-2">💬 Síguenos</h4>
+                <p class="text-slate-300 text-sm">Únete a nuestra comunidad y descubre diseños únicos.</p>
+                <div class="flex gap-3 pt-1">
+                    <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center font-bold transition-transform hover:scale-110 shadow-lg">F</a>
+                    <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-pink-600 hover:bg-pink-500 flex items-center justify-center font-bold transition-transform hover:scale-110 shadow-lg">I</a>
+                    <a href="#" aria-label="TikTok" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-600 flex items-center justify-center font-bold transition-transform hover:scale-110 shadow-lg">T</a>
+                    <a href="#" aria-label="WhatsApp" class="w-10 h-10 rounded-full bg-green-600 hover:bg-green-500 flex items-center justify-center font-bold transition-transform hover:scale-110 shadow-lg">W</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Línea divisoria y Copyright -->
+        <div class="max-w-[90%] mx-auto mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-400">
+            <p>&copy; 2026 Orto Ook. Todos los derechos reservados. Diseñado con amor para cuidar los pies de los más pequeños.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de Animaciones, Carrusel y Menú Hamburguesa -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 80,
+            duration: 800
         });
-    });
 
-    // Eventos para personajes
-    document.querySelectorAll('.selector-personaje').forEach(btn => {
-        btn.addEventListener('click', () => {
-            personajeSeleccionado = btn.getAttribute('data-valor');
-            actualizarTexto();
+        // 1. Lógica del Menú Hamburguesa Móvil
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
-    });
-</script>
 
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Lógica del Banner Rotativo Automático
+        let currentIndex = 0;
+        const track = document.getElementById('sliderTrack');
+        const totalSlides = 2;
+
+        function updateSlider() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.getElementById(`dot${i}`);
+                if (i === currentIndex) {
+                    dot.classList.remove('bg-slate-400', 'w-3');
+                    dot.classList.add('bg-cyan-700', 'w-6');
+                } else {
+                    dot.classList.remove('bg-cyan-700', 'w-6');
+                    dot.classList.add('bg-slate-400', 'w-3');
+                }
+            }
+        }
+
+        function currentSlide(index) {
+            currentIndex = index;
+            updateSlider();
+        }
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSlider();
+        }, 5000);
+    </script>
 </body>
 </html>
